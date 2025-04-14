@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show/Hide Password Toggle</title>
+
+</head>
+<body>
+   <input type="password" id="password" placeholder="Enter Password">
+   <input type="checkbox"  id="toggle">Show Password
+
+    
+</body>
+<script>
+   const password = document.getElementById('password');
+   const toggle = document.getElementById('toggle');
+   toggle.addEventListener('click',()=>{
+     password.type = toggle.checked ? "text": "password";
+     password.style.color = toggle.checked? "red" : "green";
+   })
+
+
+
+
+</script>
+</html>
