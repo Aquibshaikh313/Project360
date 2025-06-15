@@ -1,56 +1,96 @@
- const users = [
+ 
+      const users = [
         { id: 1, name: "Aquib", age: 27, country: "India" },
-        { id: 2, name: "Sanjay", age: 30, country: "India" },
-        { id: 3, name: "Emily", age: 22, country: "USA" },
-        { id: 4, name: "John", age: 29, country: "USA" },
-        { id: 5, name: "Ahmed", age: 24, country: "UAE" },
+        { id: 2, name: "Sanjay", age: 29, country: "India" },
+        { id: 3, name: "Emily", age: 25, country: "USA" },
+        { id: 4, name: "John", age: 31, country: "USA" },
+        { id: 5, name: "Ahmed", age: 28, country: "UAE" },
       ];
 
-      // 1. map → Formatted name list
-      const nameList = users.map((user, i) => `${i + 1}. ${user.name}`);
-      document.getElementById(
-        "formattedList"
-      ).innerHTML = `<strong>Formatted Name List:</strong><br>${nameList.join(
-        "<br>"
-      )}`;
+      const userList = document.getElementById("userList");
+      const searchInput = document.getElementById("searchInput");
+      const countrySelect = document.getElementById("countrySelect");
+      const userStats = document.getElementById("userStats");
+      const userGreetings = document.getElementById("userGreetings");
+      const userKeys = document.getElementById("userKeys");
+      const nameCountryPairs = document.getElementById("nameCountryPairs");
 
-      // 2. forEach → Greetings
-      let greetHTML = `<strong>Greetings:</strong><br>`;
-      users.forEach((user) => {
-        greetHTML += `Hello ${user.name}, welcome back!<br>`;
-      });
-      document.getElementById("greetings").innerHTML = greetHTML;
-
-      // 3. filter → Indian users
-      const indians = users.filter((user) => user.country === "India");
-      document.getElementById(
-        "indians"
-      ).innerHTML = `<strong>Users from India:</strong><br>${indians
-        .map((u) => u.name)
-        .join("<br>")}`;
-
-      // 4. for...in → Keys in one user object
-      let keyList = `<strong>User Keys:</strong><br>`;
-      for (let key in users[0]) {
-        keyList += `${key}: ${users[0][key]}<br>`;
+      function renderUsers(data) {
+        userList.innerHTML = data
+          .map(
+            (user) => `
+        <div class="card">
+          <h3>${user.name}</h3>
+          <p>Age: ${user.age}</p>
+          <p>Country: ${user.country}</p>
+        </div>
+      `
+          )
+          .join("");
       }
-      document.getElementById("userKeys").innerHTML = keyList;
 
-      // 5. for...of → Name and country
-      let nameCountry = `<strong>Name and Country:</strong><br>`;
-      for (let user of users) {
-        nameCountry += `${user.name} is from ${user.country}<br>`;
+      function updateStats(data) {
+        const count = data.reduce((acc, curr) => {
+          acc[curr.country] = (acc[curr.country] || 0) + 1;
+          return acc;
+        }, {});
+
+        userStats.innerHTML =
+          `<strong>User Count by Country:</strong><br/>` +
+          Object.entries(count)
+            .map(([key, val]) => `${key}: ${val}`)
+            .join("<br/>");
       }
-      document.getElementById("nameCountry").innerHTML = nameCountry;
 
-      // 6. reduce → Count users by country
-      const countryCount = users.reduce((acc, user) => {
-        acc[user.country] = (acc[user.country] || 0) + 1;
-        return acc;
-      }, {});
-
-      let countHTML = `<strong>User Count by Country:</strong><br>`;
-      for (let country in countryCount) {
-        countHTML += `${country}: ${countryCount[country]}<br>`;
+      function showGreetings(data) {
+        let greetings = "<strong>Welcome Messages:</strong><br/>";
+        data.forEach((user, i) => {
+          greetings += `Hello ${user.name}, you're user #${i + 1}!<br/>`;
+        });
+        userGreetings.innerHTML = greetings;
       }
-      document.getElementById("countryCount").innerHTML = countHTML;
+
+      function showObjectKeys(user) {
+        let keys = "<strong>Sample User Object Keys:</strong><br/>";
+        for (let key in user) {
+          keys += `${key}<br/>`;
+        }
+        userKeys.innerHTML = keys;
+      }
+
+      function showNameCountryPairs(data) {
+        const pairs = data.map((user) => [user.name, user.country]);
+        let result = "<strong>Name-Country Pairs:</strong><br/>";
+        for (let [name, country] of pairs) {
+          result += `${name} - ${country}<br/>`;
+        }
+        nameCountryPairs.innerHTML = result;
+      }
+
+      function applyFilters() {
+        const keyword = searchInput.value.toLowerCase();
+        const selectedCountry = countrySelect.value;
+
+        const filtered = users.filter(
+          (user) =>
+            (user.name.toLowerCase().includes(keyword) ||
+              user.country.toLowerCase().includes(keyword)) &&
+            (selectedCountry === "" || user.country === selectedCountry)
+        );
+
+        renderUsers(filtered);
+        updateStats(filtered);
+        showGreetings(filtered);
+        showObjectKeys(filtered[0] || {});
+        showNameCountryPairs(filtered);
+      }
+
+      searchInput.addEventListener("input", applyFilters);
+      countrySelect.addEventListener("change", applyFilters);
+
+      renderUsers(users);
+      updateStats(users);
+      showGreetings(users);
+      showObjectKeys(users[0]);
+      showNameCountryPairs(users);
+    
