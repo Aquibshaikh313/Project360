@@ -4,18 +4,55 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo App</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <h2>Todo App</h2>
- 
-   
-     <input type="text" name="" id="inputText" />
-    <button id="addTask">Add Task</button>
-    <ul id="taskList"></ul>
-   
+    <div class="container">
+      <aside class="sidebar">
+        <div class="profile">
+          <div class="avatar">AS</div>
+          <div class="info">
+            <strong>Aquib Shaikh</strong>
+            <p>aquib.shaikh256@gmail.com</p>
+          </div>
+        </div>
+        <nav class="menu">
+          <ul>
+            <li>📅 My Day</li>
+            <li>⭐ Important</li>
+            <li>📆 Planned</li>
+            <li>👤 Assigned to me</li>
+            <li class="active">📋 Tasks</li>
+          </ul>
+        </nav>
+        <div class="bottom">
+          <button class="new-list">+ New List</button>
+        </div>
+      </aside>
+      <main class="main-content">
+        <header>
+          <h2>Tasks</h2>
+        </header>
+        <!-- Empty State Placeholder (optional: hide when tasks exist) -->
+        <div class="empty-state">
+          <ul id="taskList"></ul>
+        </div>
+
+        <!-- Your Functional todo section -->
+        <div class="todo-section">
+          <div class="add-task">
+            <input
+              type="text"
+              name=""
+              id="inputText"
+              placeholder="Add a task"
+            />
+            <button id="addTask">Add</button>
+          </div>
+        </div>
+      </main>
+    </div>
   </body>
-  
+
   <script src="./script.js"></script>
-  
 </html>
