@@ -21,7 +21,7 @@ async function fetchUser() {
     userImg.src = user.picture.large;
     userName.textContent = `${user.name.title} ${user.name.first} ${user.name.last}`;
     userEmail.textContent = user.email;
-    userAge.textContent = user.dob.age;
+    // userAge.textContent = user.dob.age;
     userLocation.textContent = `${user.location.city}, ${user.location.country}`;
 
     setTimeout(() => userDiv.classList.remove("hidden"), 300);
