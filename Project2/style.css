@@ -1,0 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: space-between;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #3a3a3a;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.info p {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.menu ul {
+  list-style: none;
+}
+
+.menu li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.menu li.active,
+.menu li:hover {
+  background-color: #2d2d2d;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.new-list {
+  background: none;
+  border: 1px solid #555;
+  color: #ccc;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.main-content {
+  flex: 1;
+  background-color: #1a1a1a;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+header h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 100px;
+  color: #aaa;
+}
+
+.empty-state .icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.add-task {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  /* background-color: #2b2b2b; */
+  border-radius: 8px;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3a3a3a;
+  color: white;
+}
+
+.add-task button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.todo-section {
+  margin-top: 20px;
+}
+
+#taskList {
+  list-style: none;
+  margin-top: 15px;
+  padding-left: 0;
+}
+
+#taskList li {
+  background-color: #2b2b2b;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ddd;
+}
+
+#taskList li button {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}

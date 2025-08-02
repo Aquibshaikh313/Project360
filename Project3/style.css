@@ -1,0 +1,25 @@
+ body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      transition: background-color 0.5s ease;
+      padding-top: 50px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    #start {
+      background-color: #28a745;
+      color: white;
+      border: none;
+    }
+
+    #stop {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+    }

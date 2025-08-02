@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+     <div class="container">
+      <h1>User Manager Dashboard</h1>
+
+      <div class="search-filter">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by name or country"
+        />
+        <select id="countrySelect">
+          <option value="">All Countries</option>
+          <option value="India">India</option>
+          <option value="USA">USA</option>
+          <option value="UAE">UAE</option>
+        </select>
+      </div>
+      <div class="user-list" id="userList"></div>
+      <div class="bottom-sections">
+        <div class="stats" id="userStats"></div>
+        <div class="greetings" id="userGreetings"></div>
+        <div class="object-keys" id="userKeys"></div>
+        <div class="pairs-list" id="nameCountryPairs"></div>
+      </div>
+    </div>
+    <!-- container closed -->
+     <script src="./script.js"></script>
+  </body>
+</html>
