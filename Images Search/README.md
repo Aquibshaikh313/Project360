@@ -10,8 +10,8 @@ A simple **Image Search App** built using **HTML, CSS, and JavaScript**, powered
 
 ---
 
-<!-- ## 📸 Screenshot
-![Image Search App](images/image.png) -->
+## 📸 Screenshot
+![Image Search App](images/image1.png)
 
 ---
 

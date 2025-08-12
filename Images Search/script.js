@@ -1,5 +1,5 @@
 // Access key for Unsplash API (used to authenticate requests)
-const accessKey = "GGicNmSGumGSeKDB6ZRAxslNyNGWWE-mOGEyFF4ruW0";
+const accessKey = "lj1C6vIOkTFrc2lIYCUUinamkBrLGc1ipbLi668CbpY";
 
 // Get references to HTML elements by their IDs
 const searchForm = document.getElementById("search-form"); // The search form
