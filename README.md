@@ -29,10 +29,9 @@ This repo is crafted to help you (and others) **learn by building** — because 
 - **HTML5** — Structure & semantic web layouts  
 - **CSS3** — Styling, animations, and responsive design  
 - **JavaScript (ES6+)** — Logic, interactions & functionalities  
-<!-- - **ScrollReveal.js** — Smooth scroll animations   -->
 - **VS Code** — Primary code editor  
 - **Git & GitHub** — Version control & hosting  
-
+<!-- - **ScrollReveal.js** — Smooth scroll animations   -->
 ---
 
 ## 📂 Projects Included  
@@ -46,7 +45,10 @@ This repo is crafted to help you (and others) **learn by building** — because 
 3. Quiz App 
 4. Random Background generator  
 5. To-Do App — Keep track of your daily tasks  
-6.Random Profile Generator.
+6. Random Profile generator.
+7. Images Search     
+8. Cryptocurrency Website
+
 
 
 💡 _New projects will be added regularly — stay tuned!_ 🔔
