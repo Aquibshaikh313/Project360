@@ -85,3 +85,11 @@ nav .btn {
   border-radius: 8px;
 
 }
+.coin img{
+  width: 40px;
+  margin-right:10px ;
+}
+.coin h3{
+  color: #fff;
+  margin-bottom: 5px;
+}
