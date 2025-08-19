@@ -3,15 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <title>Cryptocurrency webiste</title>
-    <!------------ Css link ------------------>
+    <title>Cryptocurrency Website</title>
+
+    <!-- CSS link -->
     <link rel="stylesheet" href="./style.css" />
-    
+
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   </head>
   <body>
     <div class="container">
-      <nav>
+      <nav data-aos="fade-down">
         <img src="./images/logo.png" class="logo" alt="logo" />
         <ul>
           <li><a href="#">Market</a></li>
@@ -21,7 +23,8 @@
         </ul>
         <a href="#" class="btn">EN</a>
       </nav>
-      <div class="content">
+
+      <div class="content" data-aos="fade-right">
         <h1>
           BUY & <br />
           SELL <span>Crypto</span>
@@ -30,24 +33,25 @@
           World's biggest Cryptocurrency exchange available on web <br />
           as well as mobile phone
         </p>
-        <a href="#" class="btn">EXPLORE MORE</a>
+        <a href="#" class="btn" data-aos="zoom-in" data-aos-delay="200">EXPLORE MORE</a>
       </div>
-      <div class="coin-list">
-        <div class="coin">
+
+      <div class="coin-list" data-aos="fade-up" data-aos-delay="400">
+        <div class="coin" data-aos="flip-left">
           <img src="./images/bitcoin.png" alt="bitcoin png" />
           <div>
             <h3>$<span id="bitcoin"></span></h3>
             <p>Bitcoin</p>
           </div>
         </div>
-        <div class="coin">
+        <div class="coin" data-aos="flip-left" data-aos-delay="200">
           <img src="./images/ethereum.png" alt="Ethereum png" />
           <div>
             <h3>$<span id="ethereum"></span></h3>
             <p>Ethereum</p>
           </div>
         </div>
-        <div class="coin">
+        <div class="coin" data-aos="flip-left" data-aos-delay="400">
           <img src="./images/dogecoin.png" alt="Dogecoin png" />
           <div>
             <h3>$<span id="dogecoin"></span></h3>
@@ -56,7 +60,17 @@
         </div>
       </div>
     </div>
-    <!---------- Script link --------->
+
+    <!-- AOS (Animate On Scroll) JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    </script>
+
+    <!-- Your Script -->
     <script src="./script.js"></script>
   </body>
 </html>
