@@ -16,7 +16,7 @@ It allows you to generate strong random passwords with just one click and copy t
 
 ## 📸 Screenshot
 
-![Random Password Generator](./images/passgenss.png)
+![Random Password Generator](../images/passgenss.png)
 
 *(Replace `screenshot.png` with the actual screenshot of your project placed inside your repo)*
 
