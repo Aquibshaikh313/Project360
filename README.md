@@ -48,6 +48,7 @@ This repo is crafted to help you (and others) **learn by building** — because 
 6. Random Profile generator.
 7. Images Search     
 8. Cryptocurrency Website
+9. Random Password Generator
 
 
 
