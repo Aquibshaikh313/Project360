@@ -11,6 +11,9 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   </head>
   <body>
     <!-- Navbar -->
@@ -25,8 +28,8 @@
         <li><a href="#">Home</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#">Gallery</a></li>
-        <li><a href="#">Packages</a></li>
-        <li><a href="#">Testimonials</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
 
@@ -35,31 +38,25 @@
       </div>
     </nav>
 
-    <!-- Home Section -->
+    <!-- Hero Section -->
     <section class="home">
       <div class="container home-content">
-        <div class="home-left">
-          <h1>
-            Plan your <br />
-            <span class="italic">Perfect</span> Event
-          </h1>
+        <div class="home-left" data-aos="fade-right">
+          <h1>Plan Your <span>Dream Event</span></h1>
 
           <p class="home-description">
-            Creating unforgettable moments with elegant design and seamless
-            planning, tailored to your unique vision. From weddings to corporate
-            galas.
+            We create luxurious, unforgettable experiences with elegant design
+            and flawless execution — tailored just for you.
           </p>
 
           <div class="home-buttons">
-            <button type="button" class="btn btn-primary">Get Started</button>
-            <button type="button" class="btn btn-secondary">
-              View Packages
-            </button>
+            <a href="#" class="btn btn-primary">Get Started</a>
+            <a href="#packages" class="btn btn-secondary">View Packages</a>
           </div>
         </div>
 
-        <div class="home-right">
-          <img src="./imgaes/ev1.jpg" alt="Event planning setup" />
+        <div class="home-right" data-aos="fade-left">
+          <img src="./imgaes/ev1.jpg" alt="Event setup" />
         </div>
       </div>
     </section>
@@ -67,7 +64,7 @@
     <!-- Services Section -->
     <section class="services" id="services">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header"  data-aos="fade-down">
           <h2>Our Services</h2>
           <p>
             We offer comprehensive planning for every type of occasion, ensuring
@@ -76,7 +73,7 @@
         </div>
 
         <div class="services-cards">
-          <div class="service-card">
+          <div class="service-card" data-aos="fade-right">
             <img src="./imgaes/wedding.jpg" alt="Wedding event" />
             <h3>Wedding Planning</h3>
             <p>
@@ -85,7 +82,7 @@
             </p>
           </div>
 
-          <div class="service-card">
+          <div class="service-card" data-aos="fade-right">
             <img src="./imgaes/corporateEve.jpg" alt="Corporate event" />
             <h3>Corporate Events</h3>
             <p>
@@ -94,7 +91,7 @@
             </p>
           </div>
 
-          <div class="service-card">
+          <div class="service-card" data-aos="fade-left">
             <img src="./imgaes/bdayEve.jpg" alt="Birthday celebration" />
             <h3>Birthday Parties</h3>
             <p>
@@ -103,7 +100,7 @@
             </p>
           </div>
 
-          <div class="service-card">
+          <div class="service-card" data-aos="fade-left">
             <img src="./imgaes/private.jpg" alt="Private celebration" />
             <h3>Private Celebrations</h3>
             <p>
@@ -119,11 +116,11 @@
 
     <section class="planing" id="planing">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-down">
           <h2>How We Plan your Event</h2>
         </div>
 
-        <div class="planing-card">
+        <div class="planing-card" data-aos="fade-up">
           <div class="plan-card">
             <i class="fa-solid fa-lightbulb"></i>
             <h3>Share Your Idea</h3>
@@ -154,10 +151,29 @@
       </div>
     </section>
 
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+      <div class="container">
+        <div class="section-header" data-aos="zoom-out">
+          <h2>Our Work</h2>
+          <p>Take a glimpse at some of our beautifully crafted events</p>
+        </div>
+
+        <div class="gallery-grid" >
+          <img src="./imgaes/eve1.png" alt="Event 1" data-aos="flip-up" />
+          <img src="./imgaes/eve2.jpg" alt="Event 2"  data-aos="flip-up"/>
+          <img src="./imgaes/eve3.webp" alt="Event 3" data-aos="flip-up"/>
+          <img src="./imgaes/eve4.jpg" alt="Event 4" data-aos="flip-down"/>
+          <img src="./imgaes/eve5.jpg" alt="Event 5" data-aos="flip-down"/>
+          <img src="./imgaes/eve6.avif" alt="Event 6" data-aos="flip-down"/>
+        </div>
+      </div>
+    </section>
+
     <!-- Packages Section -->
     <section class="packages" id="packages">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-down">
           <h2>Our Packages</h2>
           <p>
             Transparent pricing options tailored to different event needs and
@@ -166,7 +182,7 @@
         </div>
 
         <div class="packages-cards">
-          <div class="package-card">
+          <div class="package-card" data-aos="fade-right">
             <div class="card-heading">
               <h4>BASIC</h4>
             </div>
@@ -178,7 +194,7 @@
             <div class="card-items">
               <ul>
                 <li>Initial Consultation</li>
-                <li>Venue Recommedations</li>
+                <li>Venue Recommendations</li>
                 <li>On-day coordination {4 hours}</li>
                 <li>Vendor Management</li>
               </ul>
@@ -187,7 +203,7 @@
             <div class="btn btn-secondary">Choose Basic</div>
           </div>
 
-          <div class="package-card">
+          <div class="package-card" data-aos="fade-up">
             <div class="card-heading">
               <h4>PREMIUM</h4>
             </div>
@@ -208,7 +224,7 @@
             <div class="btn btn-primary">Choose Premium</div>
           </div>
 
-          <div class="package-card">
+          <div class="package-card" data-aos="fade-left">
             <div class="card-heading">
               <h4>LUXURY</h4>
             </div>
@@ -235,11 +251,11 @@
     <!-- Testimonials section -->
     <section class="testimonials" id="testimonials">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-down">
           <h2>What Our Clients Say</h2>
         </div>
-        <div class="testimonial-cards">
-          <div class="testimonial-card">
+        <div class="testimonial-cards" >
+          <div class="testimonial-card" data-aos="fade-right">
             <div class="card-heading">
               <i class="fa fa-star"></i>
               <i class="fa fa-star"></i>
@@ -253,22 +269,20 @@
               our wildest dreams. The attention to detail was flawless"
             </div>
 
-            <div class="card-footer">
+            <div class="card-footer" data-aos="fade-up">
               <div class="img">
                 <img src="./imgaes/user3.png" alt="user1" />
               </div>
               <div class="user-info">
-              <span>
-                <h4>Sarah Jenkin</h4>
-                <p>Wedding Client</p>
-                </span
-              >
+                <span>
+                  <h4>Sarah Jenkin</h4>
+                  <p>Wedding Client</p>
+                </span>
+              </div>
             </div>
-            </div>
-          
           </div>
 
-          <div class="testimonial-card">
+          <div class="testimonial-card" data-aos="fade-up">
             <div class="card-heading">
               <i class="fa fa-star"></i>
               <i class="fa fa-star"></i>
@@ -278,24 +292,24 @@
               <span><i></i></span>
             </div>
             <div class="card-description">
-              "The most Professional team I've ever worked with. They handled our 500-person gala without a single hitch. "
+              "The most Professional team I've ever worked with. They handled
+              our 500-person gala without a single hitch. "
             </div>
 
             <div class="card-footer">
               <div class="img">
                 <img src="./imgaes/user2.png" alt="user1" />
               </div>
-            <div class="user-info">
-              <span>
-                <h4>David Marcus</h4>
-                <p>TechCorp CEO</p></span
-              >
+              <div class="user-info">
+                <span>
+                  <h4>David Marcus</h4>
+                  <p>TechCorp CEO</p></span
+                >
+              </div>
             </div>
-            </div>
-            
           </div>
 
-          <div class="testimonial-card">
+          <div class="testimonial-card" data-aos="fade-left">
             <div class="card-heading">
               <i class="fa fa-star"></i>
               <i class="fa fa-star"></i>
@@ -305,7 +319,8 @@
               <span><i></i></span>
             </div>
             <div class="card-description">
-              "Our 10th anniversary party was perfect. The managed to make it feel both grandiose and intimate at the same time"
+              "Our 10th anniversary party was perfect. The managed to make it
+              feel both grandiose and intimate at the same time"
             </div>
 
             <div class="card-footer">
@@ -313,16 +328,75 @@
                 <img src="./imgaes/user1.png" alt="user1" />
               </div>
               <div class="user-info">
-              <span>
-                <h4>Elena Rossi</h4>
-                <p>Private Client</p></span
-              >
+                <span>
+                  <h4>Elena Rossi</h4>
+                  <p>Private Client</p></span
+                >
+              </div>
             </div>
-            </div>
-            
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-container">
+          <div class="footer__col">
+            <h3 class="footer__title">
+              Event <span style="color: purple">Planner</span>
+            </h3>
+            <p class="footer__text">
+              Leading event planners dedicated to creating sophisticated,
+              modern, and memorable experiences for discerning clients worldwide
+            </p>
+          </div>
+          <div class="footer__col">
+            <h3 class="footer__title">Quick Links</h3>
+
+            <ul class="footer__list">
+              <li><a href="#planing" class="footer__link">About</a></li>
+              <li>
+                <a href="#packages" class="footer__link">Pricing Plans</a>
+              </li>
+              <li>
+                <a href="#testimonials" class="footer__link"
+                  >Client Testimonials</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer__col">
+            <h3 class="footer__title">Contact Info</h3>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <p>123 Luxury Avenue, Penthouse B, New York, NY 10001</p>
+            </div>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-phone"></i>
+              <p>+1 (555) 000-1234</p>
+            </div>
+
+            <div class="contact-item">
+              <i class="fa-solid fa-envelope"></i>
+              <p>hello@eliteplan.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 Company. All rights reserved.</p>
+      </div>
+    </footer>
+    
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
   </body>
 </html>
