@@ -1,8 +1,12 @@
+// Selectors
 const addBtn = document.querySelector(".add-btn");
 const removeBtn = document.querySelector(".remove-btn");
 const mainCont = document.querySelector(".main-cont");
 const modalCont = document.querySelector(".modal-cont");
 const textAreaCont = document.querySelector(".textArea-cont");
+
+const lockClose = "fa-lock";
+const lockOpen = "fa-lock-open";
 
 // State Flags
 
@@ -11,6 +15,7 @@ let removeTaskFlag = false;
 
 //Event listners
 
+// 1) adding
 addBtn.addEventListener("click", function () {
   //flip the flag value
 
@@ -27,6 +32,7 @@ addBtn.addEventListener("click", function () {
   modalCont.style.display = addTaskFlag ? "flex" : "none";
 });
 
+// 2) removing
 removeBtn.addEventListener("click", function () {
   //flip the flag value
   removeTaskFlag = !removeTaskFlag;
@@ -49,6 +55,34 @@ function handleRemove(ticket){
 }
 
 
+
+//Creating function to handleLock
+function handleLock(ticket){
+  const ticketLockElem = document.querySelector(".ticket-lock");
+  const ticketIconElem = ticketLockElem.children[0]; 
+  const textAreaCont = document.querySelector(".task-   area");
+  
+  ticketIconElem.addEventListener("click",function(e){
+    e.stopPropagation(); 
+
+    if(ticketIconElem.classList.contains(lockClose)){
+      ticketIconElem.classList.remove(lockClose)
+      ticketIconElem.classList.add(lockOpen);
+      //make the task editable
+      textAreaCont.setAttribute("contenteditable","true");
+    }else{
+       ticketIconElem.classList.remove(lockOpen);
+      ticketIconElem.classList.add(lockClose);
+      //make it non editable
+      textAreaCont.setAttribute("contenteditable",false)
+
+    }
+
+    console.log(ticketIconElem);
+  })
+}
+
+// Function to Create a new ticket : color,id,task
 function createTicket(ticketColor,ticketID,ticketTask){
 
   const ticketCont = document.createElement("div");
@@ -57,7 +91,7 @@ function createTicket(ticketColor,ticketID,ticketTask){
   <div class="ticket-color" style="background-color:${ticketColor}"></div>
         <div class="ticket-id">${ticketID}</div>
         <div class="task-area">${ticketTask}</div>
-        <div class="ticket-lock">
+        <div class="ticket-lock" >
           <i class="fa-solid fa-lock"></i>
         </div>
   `
@@ -66,8 +100,15 @@ function createTicket(ticketColor,ticketID,ticketTask){
   // console.log(ticketCont);
 
   handleRemove(ticketCont);
+  handleLock(ticketCont);
 
 }
+
+//practise something
+
+const ticketArray = [];
+
+//modal
 
 modalCont.addEventListener("keydown", function(e){
   const keypress = e.key;
@@ -79,10 +120,15 @@ modalCont.addEventListener("keydown", function(e){
       alert("Enter the task first")
       return; // why return bcz if not return then it will not passs an empty ticketTask
     }
+    console.log(ticketTask);
     const ticketColor = byDefaultSeleColor;
     const ticketID = shortid.generate();
-    
+
     createTicket(ticketColor,ticketID,ticketTask);
+
+    ticketArray.push({ticketColor,ticketID,ticketTask});
+    console.log(ticketArray);
+    
 
     modalCont.style.display = "none";
     
@@ -93,8 +139,9 @@ modalCont.addEventListener("keydown", function(e){
   }
 })
 
+// changing colors based on selection
 
-allPriorityColors = document.querySelectorAll(".priority-color");
+const allPriorityColors = document.querySelectorAll(".priority-color");
 
 const colors = ["lightpink","lightgreen","lightblue","black"];
 
