@@ -4,6 +4,7 @@ const removeBtn = document.querySelector(".remove-btn");
 const mainCont = document.querySelector(".main-cont");
 const modalCont = document.querySelector(".modal-cont");
 const textAreaCont = document.querySelector(".textArea-cont");
+const colors = ["lightpink","lightgreen","lightblue","black"];
 
 const lockClose = "fa-lock";
 const lockOpen = "fa-lock-open";
@@ -58,9 +59,9 @@ function handleRemove(ticket){
 
 //Creating function to handleLock
 function handleLock(ticket){
-  const ticketLockElem = document.querySelector(".ticket-lock");
+  const ticketLockElem = ticket.querySelector(".ticket-lock"); // this is local scope so ticket.query selector
   const ticketIconElem = ticketLockElem.children[0]; 
-  const textAreaCont = document.querySelector(".task-   area");
+  const textAreaCont = ticket.querySelector(".task-area");
   
   ticketIconElem.addEventListener("click",function(e){
     e.stopPropagation(); 
@@ -78,9 +79,54 @@ function handleLock(ticket){
 
     }
 
-    console.log(ticketIconElem);
+    // console.log(ticketIconElem);
   })
 }
+
+//Changing color using toolbox color on navbar
+
+function handleColor(ticket){
+  // Identify the color band that was clicked
+  // Find the color index in the array
+  // move the next color index (cyclically)
+  //update the bg color
+
+  const ticketColorBand = ticket.querySelector(".ticket-color");
+  ticketColorBand.addEventListener("click", function(){
+    
+    // 1. find the current color
+    let currentColor = ticketColorBand.style.backgroundColor;
+    
+    // 2: now finding the index of color in the array
+
+    let currentColorIdx = colors.findIndex(function(color){
+      return currentColor === color;
+    })
+
+    // 3 moving cyclically
+    let newColorIdx = (currentColorIdx+1) % colors.length;
+    let newColor = colors[newColorIdx];
+
+    // 4 updating the color band:
+    ticketColorBand.style.backgroundColor = newColor;
+
+    console.log(currentColor,currentColorIdx,newColorIdx,newColor);
+
+  // **********achieving the same thing usin loops*******************
+  // let currentColorIdx = -1;
+  
+  // for(let i = 0 ; i < colors.length; i++){
+  //  if(colors[i] === currentColor){
+  //   currentColorIdx = i;
+  //   break;
+  //  }
+  // }
+  // console.log(currentColorIdx)
+  })
+
+  
+}
+
 
 // Function to Create a new ticket : color,id,task
 function createTicket(ticketColor,ticketID,ticketTask){
@@ -101,12 +147,13 @@ function createTicket(ticketColor,ticketID,ticketTask){
 
   handleRemove(ticketCont);
   handleLock(ticketCont);
+  handleColor(ticketCont);
 
 }
 
 //practise something
 
-const ticketArray = [];
+// const ticketArray = [];
 
 //modal
 
@@ -120,14 +167,14 @@ modalCont.addEventListener("keydown", function(e){
       alert("Enter the task first")
       return; // why return bcz if not return then it will not passs an empty ticketTask
     }
-    console.log(ticketTask);
+    // console.log(ticketTask);
     const ticketColor = byDefaultSeleColor;
     const ticketID = shortid.generate();
 
     createTicket(ticketColor,ticketID,ticketTask);
 
-    ticketArray.push({ticketColor,ticketID,ticketTask});
-    console.log(ticketArray);
+    // ticketArray.push({ticketColor,ticketID,ticketTask});
+    // console.log(ticketArray);
     
 
     modalCont.style.display = "none";
@@ -139,11 +186,14 @@ modalCont.addEventListener("keydown", function(e){
   }
 })
 
+
+
+
 // changing colors based on selection
 
 const allPriorityColors = document.querySelectorAll(".priority-color");
 
-const colors = ["lightpink","lightgreen","lightblue","black"];
+// const colors = ["lightpink","lightgreen","lightblue","black"];
 
 let byDefaultSeleColor = colors[colors.length - 1];
 
@@ -180,3 +230,35 @@ let byDefaultSeleColor = colors[colors.length - 1];
 //     color.classList.add("active");
 //   });
 // });
+
+
+const toolBoxColors = document.getElementsByClassName("color");
+
+ 
+//1 looping through all colors
+for(let i = 0 ; i < toolBoxColors.length; i++){
+  toolBoxColors[i].addEventListener("click",function(){
+    //selecting color
+    let selectedColor = toolBoxColors[i].classList[0];
+   
+
+    //2 select all tickets
+    let allTickets = document.querySelectorAll(".ticket-cont");
+    console.log(allTickets,toolBoxColors,selectedColor,)
+    
+    //3 looping through ticketColorBand
+    for(let j = 0 ; j < allTickets.length ; j++){
+      
+      let ticketColor = allTickets[j].getAttribute("ticket-color");
+       
+      //4 comparing colors
+       if(ticketColor === selectedColor){
+        allTickets[j].style.display = "block";
+       }else{
+        allTickets[j].style.display = "none";
+       }
+    }
+
+   
+  })
+}
