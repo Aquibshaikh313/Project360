@@ -240,16 +240,20 @@ for(let i = 0 ; i < toolBoxColors.length; i++){
   toolBoxColors[i].addEventListener("click",function(){
     //selecting color
     let selectedColor = toolBoxColors[i].classList[0];
+    // console.log(selectedColor);
+    
    
 
     //2 select all tickets
     let allTickets = document.querySelectorAll(".ticket-cont");
-    console.log(allTickets,toolBoxColors,selectedColor,)
+    console.log(allTickets)
     
     //3 looping through ticketColorBand
     for(let j = 0 ; j < allTickets.length ; j++){
       
       let ticketColor = allTickets[j].getAttribute("ticket-color");
+      console.log(ticketColor);
+      
        
       //4 comparing colors
        if(ticketColor === selectedColor){
