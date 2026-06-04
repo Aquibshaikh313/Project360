@@ -253,3 +253,8 @@ for (let i = 0; i < toolBoxColors.length; i++) {
     }
   });
 }
+
+
+//local storage
+
+localStorage.setItem("username", "Aquib");
