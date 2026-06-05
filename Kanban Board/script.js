@@ -5,9 +5,42 @@ const mainCont = document.querySelector(".main-cont");
 const modalCont = document.querySelector(".modal-cont");
 const textAreaCont = document.querySelector(".textArea-cont");
 const colors = ["lightpink", "lightgreen", "lightblue", "black"];
-
 const lockClose = "fa-lock";
 const lockOpen = "fa-lock-open";
+
+//step 1 : creating a ticket array to save the data to local storage
+let ticketArr = [];
+
+if(localStorage.getItem("tickets")){ // read the value
+  ticketArr = JSON.parse(localStorage.getItem("tickets")); // since it in string we first parse it
+  console.log(ticketArr);
+
+  //rebuilding the UI from scratch 
+  for(let i = 0 ; i < ticketArr.length ; i++){
+     const {ticketColor,ticketID,ticketTask} = ticketArr[i];
+     createTicket(ticketID,ticketColor,ticketTask); 
+  }
+}
+
+function addNewTicket(ticketColor,ticketTask){
+  const id = shortid();
+  ticketArr.push({ticketColor, ticketID : id ,ticketTask});
+  localStorage.setItem("tickets", JSON.stringify(ticketArr));
+  createTicket(ticketColor,id,ticketTask);
+  
+}
+
+function getTicketIndex(id){
+  for(let i = 0 ; i < ticketArr.length; i++){
+     if(ticketArr[i].ticketID === id)
+      return i;
+  }
+return -1;
+}
+
+
+
+
 
 // State Flags
 
@@ -56,10 +89,14 @@ function handleRemove(ticket) {
 }
 
 //Creating function to handleLock
-function handleLock(ticket) {
+function handleLock(ticket,id) {
   const ticketLockElem = ticket.querySelector(".ticket-lock"); // this is local scope so ticket.query selector
   const ticketIconElem = ticketLockElem.children[0];
   const textAreaCont = ticket.querySelector(".task-area");
+
+  const index = getTicketIndex(id);
+  console.log("updating ticket ," id);
+  
 
   ticketIconElem.addEventListener("click", function (e) {
     e.stopPropagation();
@@ -75,6 +112,10 @@ function handleLock(ticket) {
       //make it non editable
       textAreaCont.setAttribute("contenteditable", false);
     }
+
+    //update the stored data in the array 
+    ticketArr[index].ticketTask = textAreaCont.innerText;
+    localStorage.setItem("tickets", JSON.stringify(ticketArr))
 
     // console.log(ticketIconElem);
   });
@@ -137,9 +178,9 @@ function createTicket(ticketColor, ticketID, ticketTask) {
   mainCont.appendChild(ticketCont);
   // console.log(ticketCont);
 
-  handleRemove(ticketCont);
-  handleLock(ticketCont);
-  handleColor(ticketCont);
+  handleRemove(ticketCont,ticketID);
+  handleLock(ticketCont,ticketID);
+  handleColor(ticketCont,ticketID);
 }
 
 //practise something
@@ -159,9 +200,10 @@ modalCont.addEventListener("keydown", function (e) {
     }
     // console.log(ticketTask);
     const ticketColor = byDefaultSeleColor;
-    const ticketID = shortid.generate();
+    // const ticketID = shortid.generate();
 
-    createTicket(ticketColor, ticketID, ticketTask);
+    // createTicket(ticketColor, ticketID, ticketTask);
+    addNewTicket(ticketColor,ticketTask);
 
     // ticketArray.push({ticketColor,ticketID,ticketTask});
     // console.log(ticketArray);
@@ -255,6 +297,4 @@ for (let i = 0; i < toolBoxColors.length; i++) {
 }
 
 
-//local storage
-
-localStorage.setItem("username", "Aquib");
+// localStorage.removeItem("kanbanTickets");
