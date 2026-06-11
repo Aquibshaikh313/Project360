@@ -8,7 +8,7 @@ const conditionIcon = document.querySelector(".weather_condition img");
 const searchForm = document.querySelector("#searchForm");
 const searchInput = document.getElementById("searchInput");
 
-
+//Updating dom
 function updateDOM(data) {
   const { location, current } = data; // object destructuring
 
@@ -22,32 +22,37 @@ function updateDOM(data) {
 
   tempField.textContent = `${current.temp_c}°C`;
   cityField.textContent = location.name;
-  // timeField.textContent = location.localtime;
+  
   conditionField.textContent = current.condition.text;
   conditionIcon.src = `https:${current.condition.icon}`;
   conditionIcon.alt = current.condition.text;
 }
 
+
+//Api function calls
 async function weatherData(city) {
   try {
     const url = `https://api.weatherapi.com/v1/current.json?key=450ceea80f6246ba800145403252910&q=${city}&aqi=yes`;
-    const response = await fetch(url);
+    const response = await fetch(url); // this will result in async code
+    
     if (!response.ok) {
-      throw new Error("City not found or invalid response");
+        console.error("City not found or invalid response");
+      }
+      const data = await response.json(); //internally it will do json.parse();
+      console.log(data);
+      updateDOM(data);
+    } catch (error) {
+      console.error("Error in fetching data", error.message);
+      alert("Unable to fetch weather data");
     }
-    const data = await response.json(); //internally it will do json.parse();
-    console.log(data);
-    updateDOM(data);
-  } catch (error) {
-    console.log("Error in fetching data", error.message);
-    alert("Unable to fetch weather data");
-  }
 }
 weatherData("pune");
 
+// Adding event listner
 searchForm.addEventListener("submit", function (e) {
   e.preventDefault(); //prevents page from realoading
   const city = searchInput.value.trim();
+  //it won't submit blank input
   if (city === "") {
     alert("Please enter city name");
     return;
