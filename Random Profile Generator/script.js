@@ -1,5 +1,4 @@
-
-const userDiv = document.getElementById('user');
+const userDiv = document.getElementById("user");
 const btn = document.getElementById("btn");
 const userImg = document.getElementById("user-img");
 const userName = document.getElementById("user-name");
@@ -11,54 +10,76 @@ const darkModeBtn = document.getElementById("dark-mode");
 async function fetchUser() {
   try {
     btn.disabled = true;
-    btn.textContent = "Loading";
+    btn.textContent = "Loading...";
     userDiv.classList.add("hidden");
 
     const response = await fetch("https://randomuser.me/api/");
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user data");
+    }
+
     const data = await response.json();
     const user = data.results[0];
 
     userImg.src = user.picture.large;
-    userName.textContent = `${user.name.title} ${user.name.first} ${user.name.last}`;
-     userName.style.color = 'yellow';
+    userImg.alt = `${user.name.first} ${user.name.last}`;
+
+    userName.textContent =
+      `${user.name.title} ${user.name.first} ${user.name.last}`;
+
     userEmail.textContent = user.email;
     userAge.textContent = user.dob.age;
-    userLocation.textContent = `${user.location.city}, ${user.location.country}`;
+    userLocation.textContent =
+      `${user.location.city}, ${user.location.country}`;
 
-    setTimeout(() => userDiv.classList.remove("hidden"), 300);
+    setTimeout(() => {
+      userDiv.classList.remove("hidden");
+    }, 300);
+
   } catch (error) {
     console.error("Error fetching user:", error);
+
+    userDiv.classList.remove("hidden");
+
+    userName.textContent = "Failed to load user";
+    userEmail.textContent = "";
+    userAge.textContent = "";
+    userLocation.textContent = "";
+    userImg.src = "";
+    userImg.alt = "No user available";
+
   } finally {
     btn.disabled = false;
     btn.textContent = "Get New User";
   }
 }
 
-//storing the dark mode into localStorage so even if we refresh it doesnt switch back
-// //Dark mode toggle
-if (localStorage.getItem("theme") === "dark") {
+// Theme Initialization
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
   document.body.classList.add("dark-mode");
   darkModeBtn.textContent = "Toggle Bright Mode";
 } else {
   darkModeBtn.textContent = "Toggle Dark Mode";
 }
 
-// Dark Mode Toggle
+// Theme Toggle
 darkModeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
+  const isDarkMode = document.body.classList.toggle("dark-mode");
 
-  if (document.body.classList.contains("dark-mode")) {
+  if (isDarkMode) {
     darkModeBtn.textContent = "Toggle Bright Mode";
-    localStorage.setItem("theme", "dark"); // Save to localStorage
+    localStorage.setItem("theme", "dark");
   } else {
     darkModeBtn.textContent = "Toggle Dark Mode";
-    localStorage.setItem("theme", "light"); // Save to localStorage
+    localStorage.setItem("theme", "light");
   }
 });
 
-
-// Load a user when the page loads
-fetchUser();
-
-// Load new user on button click
-btn.addEventListener("click", fetchUser);
+// Wait until DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  fetchUser();
+  btn.addEventListener("click", fetchUser);
+});
