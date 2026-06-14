@@ -1,39 +1,46 @@
-const notesCont = document.querySelector(".notes-container");
+const notesContainer = document.querySelector(".notes-container");
 const createBtn = document.querySelector(".create");
-let notes = document.querySelector(".input-box");
 
-function showNotes(){
-  notesCont.innerHTML = localStorage.getItem("notes")
+// Load notes from localStorage
+function showNotes() {
+    notesContainer.innerHTML = localStorage.getItem("notes") || "";
 }
+
+// Save notes to localStorage
+function updateStorage() {
+    localStorage.setItem("notes", notesContainer.innerHTML);
+}
+
 showNotes();
 
-//after refershing data is loss so need to add local storage
-function updateStorage(){
-  localStorage.setItem("notes",notesCont.innerHTML);
-}
+// Create a new note
+createBtn.addEventListener("click", () => {
+    const inputBox = document.createElement("p");
+    const deleteIcon = document.createElement("img");
 
+    inputBox.classList.add("input-box");
+    inputBox.setAttribute("contenteditable", "true");
 
-createBtn.addEventListener("click",() => {
-  let inputBox = document.createElement("p");
-  let img = document.createElement("img");
-  inputBox.className = "input-box";
-  inputBox.setAttribute("contenteditable", "true");
-  img.src = "./images/delete.png";
-  notesCont.appendChild(inputBox).appendChild(img);
-})
+    deleteIcon.src = "./images/delete.png";
+    deleteIcon.alt = "Delete Note";
 
-notesCont.addEventListener("click", function(e){
-  if(e.target.tagName === "IMG"){
-    e.target.parentElement.remove();
+    inputBox.appendChild(deleteIcon);
+    notesContainer.appendChild(inputBox);
+
     updateStorage();
-  }
-  else if(e.target.tagName === "P"){
-    notes = document.querySelectorAll(".input-box");
-    notes.forEach(nt => {
-      nt.onkeyup = function(){
+});
+
+// Handle delete action
+notesContainer.addEventListener("click", (e) => {
+    if (e.target.tagName === "IMG") {
+        e.target.parentElement.remove();
         updateStorage();
-      }
-      
-    });
-  }
-})
+    }
+});
+
+// Save changes while typing
+notesContainer.addEventListener("input", (e) => {
+    if (e.target.classList.contains("input-box")) {
+        updateStorage();
+    }
+});
