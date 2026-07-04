@@ -1,96 +1,115 @@
- 
-      const users = [
-        { id: 1, name: "Aquib", age: 27, country: "India" },
-        { id: 2, name: "Sanjay", age: 29, country: "India" },
-        { id: 3, name: "Emily", age: 25, country: "USA" },
-        { id: 4, name: "John", age: 31, country: "USA" },
-        { id: 5, name: "Ahmed", age: 28, country: "UAE" },
-      ];
+const users = [
+  { id: 1, name: "Aquib", age: 27, country: "India" },
+  { id: 2, name: "Sanjay", age: 29, country: "India" },
+  { id: 3, name: "Emily", age: 25, country: "USA" },
+  { id: 4, name: "John", age: 31, country: "USA" },
+  { id: 5, name: "Ahmed", age: 28, country: "UAE" },
+];
 
-      const userList = document.getElementById("userList");
-      const searchInput = document.getElementById("searchInput");
-      const countrySelect = document.getElementById("countrySelect");
-      const userStats = document.getElementById("userStats");
-      const userGreetings = document.getElementById("userGreetings");
-      const userKeys = document.getElementById("userKeys");
-      const nameCountryPairs = document.getElementById("nameCountryPairs");
+const countryAccent = {
+  India: "var(--india)",
+  USA: "var(--usa)",
+  UAE: "var(--uae)",
+};
 
-      function renderUsers(data) {
-        userList.innerHTML = data
-          .map(
-            (user) => `
-        <div class="card">
-          <h3>${user.name}</h3>
-          <p>Age: ${user.age}</p>
-          <p>Country: ${user.country}</p>
-        </div>
-      `
-          )
-          .join("");
-      }
+const userList = document.getElementById("userList");
+const emptyState = document.getElementById("emptyState");
+const searchInput = document.getElementById("searchInput");
+const countrySelect = document.getElementById("countrySelect");
+const userStats = document.querySelector("#userStats .panel-body");
+const userGreetings = document.querySelector("#userGreetings .panel-body");
+const userKeys = document.querySelector("#userKeys .panel-body");
+const nameCountryPairs = document.querySelector("#nameCountryPairs .panel-body");
 
-      function updateStats(data) {
-        const count = data.reduce((acc, curr) => {
-          acc[curr.country] = (acc[curr.country] || 0) + 1;
-          return acc;
-        }, {});
+function renderUsers(data) {
+  emptyState.hidden = data.length > 0;
+  userList.innerHTML = data
+    .map(
+      (user, i) => `
+    <div class="card" style="--card-accent: ${countryAccent[user.country] || "var(--teal)"}">
+      <div class="card-index">No. ${String(i + 1).padStart(2, "0")}</div>
+      <h3>${user.name}</h3>
+      <div class="card-meta">
+        <span>Age</span>
+        <strong>${user.age}</strong>
+      </div>
+      <span class="card-tag">${user.country}</span>
+    </div>
+  `
+    )
+    .join("");
+}
 
-        userStats.innerHTML =
-          `<strong>User Count by Country:</strong><br/>` +
-          Object.entries(count)
-            .map(([key, val]) => `${key}: ${val}`)
-            .join("<br/>");
-      }
+function updateStats(data) {
+  const count = data.reduce((acc, curr) => {
+    acc[curr.country] = (acc[curr.country] || 0) + 1;
+    return acc;
+  }, {});
 
-      function showGreetings(data) {
-        let greetings = "<strong>Welcome Messages:</strong><br/>";
-        data.forEach((user, i) => {
-          greetings += `Hello ${user.name}, you're user #${i + 1}!<br/>`;
-        });
-        userGreetings.innerHTML = greetings;
-      }
+  const entries = Object.entries(count);
+  userStats.innerHTML = entries.length
+    ? entries
+        .map(
+          ([key, val]) =>
+            `<div class="panel-row"><span>${key}</span><span class="value">${val}</span></div>`
+        )
+        .join("")
+    : `<span class="field-name">No matches</span>`;
+}
 
-      function showObjectKeys(user) {
-        let keys = "<strong>Sample User Object Keys:</strong><br/>";
-        for (let key in user) {
-          keys += `${key}<br/>`;
-        }
-        userKeys.innerHTML = keys;
-      }
+function showGreetings(data) {
+  userGreetings.innerHTML = data.length
+    ? data
+        .map(
+          (user, i) =>
+            `<div class="panel-row"><span>${user.name}</span><span class="value">#${i + 1}</span></div>`
+        )
+        .join("")
+    : `<span class="field-name">No matches</span>`;
+}
 
-      function showNameCountryPairs(data) {
-        const pairs = data.map((user) => [user.name, user.country]);
-        let result = "<strong>Name-Country Pairs:</strong><br/>";
-        for (let [name, country] of pairs) {
-          result += `${name} - ${country}<br/>`;
-        }
-        nameCountryPairs.innerHTML = result;
-      }
+function showObjectKeys(user) {
+  const keys = Object.keys(user);
+  userKeys.innerHTML = keys.length
+    ? keys.map((key) => `<div class="field-name">${key}</div>`).join("")
+    : `<span class="field-name">—</span>`;
+}
 
-      function applyFilters() {
-        const keyword = searchInput.value.toLowerCase();
-        const selectedCountry = countrySelect.value;
+function showNameCountryPairs(data) {
+  const pairs = data.map((user) => [user.name, user.country]);
+  nameCountryPairs.innerHTML = pairs.length
+    ? pairs
+        .map(
+          ([name, country]) =>
+            `<div class="panel-row"><span>${name}</span><span class="value">${country}</span></div>`
+        )
+        .join("")
+    : `<span class="field-name">No matches</span>`;
+}
 
-        const filtered = users.filter(
-          (user) =>
-            (user.name.toLowerCase().includes(keyword) ||
-              user.country.toLowerCase().includes(keyword)) &&
-            (selectedCountry === "" || user.country === selectedCountry)
-        );
+function applyFilters() {
+  const keyword = searchInput.value.toLowerCase();
+  const selectedCountry = countrySelect.value;
 
-        renderUsers(filtered);
-        updateStats(filtered);
-        showGreetings(filtered);
-        showObjectKeys(filtered[0] || {});
-        showNameCountryPairs(filtered);
-      }
+  const filtered = users.filter(
+    (user) =>
+      (user.name.toLowerCase().includes(keyword) ||
+        user.country.toLowerCase().includes(keyword)) &&
+      (selectedCountry === "" || user.country === selectedCountry)
+  );
 
-      searchInput.addEventListener("input", applyFilters);
-      countrySelect.addEventListener("change", applyFilters);
+  renderUsers(filtered);
+  updateStats(filtered);
+  showGreetings(filtered);
+  showObjectKeys(filtered[0] || {});
+  showNameCountryPairs(filtered);
+}
 
-      renderUsers(users);
-      updateStats(users);
-      showGreetings(users);
-      showObjectKeys(users[0]);
-      showNameCountryPairs(users);
-    
+searchInput.addEventListener("input", applyFilters);
+countrySelect.addEventListener("change", applyFilters);
+
+renderUsers(users);
+updateStats(users);
+showGreetings(users);
+showObjectKeys(users[0]);
+showNameCountryPairs(users);
