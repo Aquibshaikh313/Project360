@@ -65,7 +65,7 @@ body{
     margin: 20px auto 0;
     border-radius: 10px;
     cursor: pointer;
-    display: none;
+    /* display: none; */
 
 }
 
@@ -79,3 +79,64 @@ body{
   color: white;
 }
 
+
+/* Result card */
+#result-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Blurs out the background quiz */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.result-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  font-family: sans-serif;
+}
+
+.result-content .icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.result-content h2 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.result-content .score-text {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+#final-score {
+  font-weight: bold;
+  color: #4CAF50; /* Green score highlight */
+}
+
+#restart-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#restart-btn:hover {
+  background-color: #0056b3;
+}

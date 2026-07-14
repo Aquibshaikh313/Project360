@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "difficulty": "Easy",
+    "question": "Which keyword is used to declare a constant in JavaScript?",
+    "options": ["var", "let", "const", "static"],
+    "answer": "const"
+  },
+  {
+    "id": 2,
+    "difficulty": "Easy",
+    "question": "Which method converts a JSON string into a JavaScript object?",
+    "options": ["JSON.stringify()", "JSON.parse()", "JSON.convert()", "JSON.object()"],
+    "answer": "JSON.parse()"
+  },
+  {
+    "id": 3,
+    "difficulty": "Easy",
+    "question": "What will typeof null return?",
+    "options": ["null", "object", "undefined", "boolean"],
+    "answer": "object"
+  },
+  {
+    "id": 4,
+    "difficulty": "Medium",
+    "question": "Which array method creates a new array containing elements that pass a condition?",
+    "options": ["map()", "forEach()", "filter()", "reduce()"],
+    "answer": "filter()"
+  },
+  {
+    "id": 5,
+    "difficulty": "Medium",
+    "question": "What is the output of: console.log(2 == '2')?",
+    "options": ["false", "true", "undefined", "Error"],
+    "answer": "true"
+  },
+  {
+    "id": 6,
+    "difficulty": "Medium",
+    "question": "Which keyword allows a variable to be block scoped?",
+    "options": ["var", "global", "let", "define"],
+    "answer": "let"
+  },
+  {
+    "id": 7,
+    "difficulty": "Medium",
+    "question": "Which method is used to add one or more elements to the end of an array?",
+    "options": ["push()", "pop()", "shift()", "unshift()"],
+    "answer": "push()"
+  },
+  {
+    "id": 8,
+    "difficulty": "Hard",
+    "question": "What will be the output of: console.log([] == false)?",
+    "options": ["true", "false", "undefined", "Error"],
+    "answer": "true"
+  },
+  {
+    "id": 9,
+    "difficulty": "Hard",
+    "question": "Which statement about closures is correct?",
+    "options": [
+      "A closure can access variables from its outer function even after the outer function has returned.",
+      "Closures only work with arrow functions.",
+      "Closures automatically delete unused variables.",
+      "Closures cannot access global variables."
+    ],
+    "answer": "A closure can access variables from its outer function even after the outer function has returned."
+  },
+  {
+    "id": 10,
+    "difficulty": "Hard",
+    "question": "What will be the output of: console.log(typeof NaN)?",
+    "options": ["number", "NaN", "undefined", "object"],
+    "answer": "number"
+  }
+]

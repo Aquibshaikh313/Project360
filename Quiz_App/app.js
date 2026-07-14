@@ -1,149 +1,106 @@
-// ===============================
-// QUIZ DATA
-// ===============================
-
-const questions = [
-  {
-    question: "Which company developed JavaScript?",
-    answers: [
-      { text: "Netscape", correct: true },
-      { text: "Microsoft", correct: false },
-      { text: "Sun Microsystems", correct: false },
-      { text: "Oracle", correct: false }
-    ]
-  },
-
-  // More questions...
-];
-
-// ===============================
-// DOM ELEMENTS
-// ===============================
-
-const quest = document.getElementById("question");
+const divBlock = document.getElementsByClassName("quiz");
+const question = document.getElementById("question");
 const ans = document.getElementById("answer-buttons");
-const nextBtn = document.getElementById("next-btn");
+const nextBtn = document.querySelector("#next-btn");
+const questNum = document.querySelector("#ques-num");
+const selectedbtn = document.querySelectorAll(".btn");
+const resCard = document.querySelector("#result-card");
+const finScore = document.querySelector("#final-score");
+const resBtn = document.querySelector("#restart-btn");
 
-// ===============================
-// QUIZ STATE
-// ===============================
+let questions = [];
+let currentQuestion = 0;
+let rightAns = 0;
+let hasAnswered = false;
 
-let currentQuestionIndex = 0;
-let score = 0;
 
-// ===============================
-// START QUIZ
-// ===============================
-
-function startQuiz() {
-  currentQuestionIndex = 0;
-  score = 0;
-
-  nextBtn.innerHTML = "Next";
-  nextBtn.classList.remove("playAgain");
-
-  showQuestion();
-}
-
-// ===============================
-// DISPLAY QUESTION
-// ===============================
-
+//*******Function to display the questions******
 function showQuestion() {
-  resetState();
+  question.innerText = `${currentQuestion + 1} : ${questions[currentQuestion].question}`;
+  const buttons = document.querySelectorAll(".btn");
 
-  const currentQuestion = questions[currentQuestionIndex];
-  const questionNo = currentQuestionIndex + 1;
-
-  quest.innerHTML = `${questionNo}. ${currentQuestion.question}`;
-
-  currentQuestion.answers.forEach(answer => {
-    const button = document.createElement("button");
-
-    button.innerHTML = answer.text;
-    button.classList.add("btn");
-
-    if (answer.correct) {
-      button.dataset.correct = "true";
-    }
-
-    button.addEventListener("click", selectAnswer);
-
-    ans.appendChild(button);
+  buttons.forEach((button, index) => {
+    button.innerText = questions[currentQuestion].options[index];
+    // console.log(questions[currentQuestion].answer); this way we can get correct ans
   });
 }
 
-// ===============================
-// RESET QUESTION STATE
-// ===============================
+fetch("./questions.json")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+    questions = data; 
+    // We store data inside the global questions variable so that other user-driven actions (like clicking the Next Button later) can read the quiz data. We call showQuestion() inside this block because we have to wait for the data to finish downloading before we can display it.
 
-function resetState() {
-  nextBtn.style.display = "none";
-  ans.innerHTML = "";
-}
-
-// ===============================
-// HANDLE ANSWER SELECTION
-// ===============================
-
-function selectAnswer(e) {
-  const selectedBtn = e.target;
-  const isCorrect = selectedBtn.dataset.correct === "true";
-
-  if (isCorrect) {
-    selectedBtn.classList.add("correct");
-    score++;
-  } else {
-    selectedBtn.classList.add("incorrect");
-  }
-
-  Array.from(ans.children).forEach(button => {
-    if (button.dataset.correct === "true") {
-      button.classList.add("correct");
-    }
-
-    button.disabled = true;
-  });
-
-  nextBtn.style.display = "block";
-}
-
-// ===============================
-// SHOW FINAL SCORE
-// ===============================
-
-function showScore() {
-  resetState();
-
-  quest.innerHTML =
-    `You scored ${score} out of ${questions.length}! 🎉`;
-
-  nextBtn.innerHTML = "Play Again";
-  nextBtn.style.display = "block";
-  nextBtn.classList.add("playAgain");
-}
-
-// ===============================
-// NEXT / RESTART BUTTON
-// ===============================
-
-nextBtn.addEventListener("click", () => {
-  if (nextBtn.classList.contains("playAgain")) {
-    startQuiz();
-    return;
-  }
-
-  currentQuestionIndex++;
-
-  if (currentQuestionIndex < questions.length) {
     showQuestion();
+  });
+
+// switching to next question
+nextBtn.addEventListener("click", function () {
+  // console.log(nextBtn);
+  // console.log(currentQuestion);
+  // console.log(currentQuestion < questions.length - 1);
+  // console.log(hasAnswered);
+  // console.log(questions.length);
+
+  if (currentQuestion < questions.length - 1 && hasAnswered) {
+    currentQuestion++;
+    hasAnswered = false; //resetting this false for the next question
+    showQuestion();
+
+    //Eraser is needed or else it will take the values(selection) from prev question
+    selectedbtn.forEach(function (btn) {
+      btn.style.backgroundColor = "";
+    });
+
+  } else if (!hasAnswered) {
+    alert("Select the option below");
   } else {
-    showScore();
+    //making our score card visibel at the end
+    if (currentQuestion == questions.length - 1) {
+      resCard.style.display = "flex";
+      finScore.innerText = rightAns;
+    }
   }
 });
 
-// ===============================
-// INITIALIZE APP
-// ===============================
+//after clicking on restart btn on score lets take it to back to first question
+resBtn.addEventListener("click", function () {
+  currentQuestion = 0;
+  rightAns = 0;
+  hasAnswered = false;
+  resCard.style.display = "none";
+  showQuestion();
+});
 
-startQuiz();
+
+selectedbtn.forEach(function (btn, index) {
+  btn.addEventListener("click", function () {
+    hasAnswered = true; // tell the next btn that the answer was picked/selected
+    
+    //we need to run this below loop to erase the memory after selection or else it will remain as it is
+    selectedbtn.forEach(function (everyBtn) {
+      everyBtn.style.backgroundColor = "";
+    });
+
+    const correctAns = questions[currentQuestion].answer;
+
+    if (btn.innerText == correctAns) {
+      btn.style.backgroundColor = "green";
+      rightAns++;
+      console.log("Correct Ans :", rightAns);
+
+      // btn.style.backgroundColor = "";
+    } else {
+      btn.style.backgroundColor = "red";
+    }
+  });
+});
+
+/**
+ * Todays task for project
+ * 1) showcase correct ans if selected - green ,if wrong - red (done)
+ * 2) Disable every button after clicking ,No changing ans (done little tricky but done)
+ * 3) Maintaining a score counter at last when quiz gets over
+ *
+ */
