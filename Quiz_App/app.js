@@ -7,59 +7,70 @@ const selectedbtn = document.querySelectorAll(".btn");
 const resCard = document.querySelector("#result-card");
 const finScore = document.querySelector("#final-score");
 const resBtn = document.querySelector("#restart-btn");
+const progressBar = document.querySelector(".progress-bar");
+const progressText = document.querySelector(".progress-text");
+const quizBox = document.querySelector(".app");
+const accuracyText = document.querySelector(".accuracy");
 
 let questions = [];
 let currentQuestion = 0;
 let rightAns = 0;
 let hasAnswered = false;
 
-
 //*******Function to display the questions******
 function showQuestion() {
   question.innerText = `${currentQuestion + 1} : ${questions[currentQuestion].question}`;
-  const buttons = document.querySelectorAll(".btn");
 
-  buttons.forEach((button, index) => {
+  selectedbtn.forEach((button, index) => {
     button.innerText = questions[currentQuestion].options[index];
     // console.log(questions[currentQuestion].answer); this way we can get correct ans
   });
 }
 
 fetch("./questions.json")
-  .then((response) => response.json())
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network Error was not ok");
+    }
+    return response.json();
+  })
   .then((data) => {
     console.log(data);
-    questions = data; 
+    questions = data;
     // We store data inside the global questions variable so that other user-driven actions (like clicking the Next Button later) can read the quiz data. We call showQuestion() inside this block because we have to wait for the data to finish downloading before we can display it.
 
     showQuestion();
+    updateProgress();
+  })
+  .catch((error) => {
+    console.error("fetch error", error);
   });
 
 // switching to next question
 nextBtn.addEventListener("click", function () {
-  // console.log(nextBtn);
-  // console.log(currentQuestion);
-  // console.log(currentQuestion < questions.length - 1);
-  // console.log(hasAnswered);
-  // console.log(questions.length);
-
   if (currentQuestion < questions.length - 1 && hasAnswered) {
     currentQuestion++;
     hasAnswered = false; //resetting this false for the next question
     showQuestion();
+    updateProgress();
 
     //Eraser is needed or else it will take the values(selection) from prev question
-    selectedbtn.forEach(function (btn) {
-      btn.style.backgroundColor = "";
+    selectedbtn.forEach(function (everyBtn) {
+      everyBtn.style.backgroundColor = "";
+      everyBtn.disabled = false;
     });
-
   } else if (!hasAnswered) {
     alert("Select the option below");
   } else {
     //making our score card visibel at the end
-    if (currentQuestion == questions.length - 1) {
+    if (currentQuestion === questions.length - 1) {
       resCard.style.display = "flex";
+      quizBox.style.display = "none";
       finScore.innerText = rightAns;
+
+      //accuracy logic
+      const accuracy = Math.round((rightAns / questions.length) * 100);
+      accuracyText.innerText = `Accuracy : ${accuracy} %`;
     }
   }
 });
@@ -70,37 +81,49 @@ resBtn.addEventListener("click", function () {
   rightAns = 0;
   hasAnswered = false;
   resCard.style.display = "none";
+  quizBox.style.display = "block";
+  selectedbtn.forEach(function (btn) {
+    btn.style.backgroundColor = "";
+  });
   showQuestion();
+  updateProgress();
 });
-
 
 selectedbtn.forEach(function (btn, index) {
   btn.addEventListener("click", function () {
     hasAnswered = true; // tell the next btn that the answer was picked/selected
-    
-    //we need to run this below loop to erase the memory after selection or else it will remain as it is
-    selectedbtn.forEach(function (everyBtn) {
-      everyBtn.style.backgroundColor = "";
-    });
 
     const correctAns = questions[currentQuestion].answer;
 
-    if (btn.innerText == correctAns) {
-      btn.style.backgroundColor = "green";
+    //updating the score first before looping thru it
+    if (btn.innerText === correctAns) {
       rightAns++;
-      console.log("Correct Ans :", rightAns);
-
-      // btn.style.backgroundColor = "";
-    } else {
-      btn.style.backgroundColor = "red";
+      console.log("Correct Ans", rightAns);
     }
+
+    selectedbtn.forEach(function (everyBtn) {
+      if (everyBtn.innerText === correctAns) {
+        everyBtn.style.backgroundColor = "green";
+      } else if (everyBtn === btn) {
+        everyBtn.style.backgroundColor = "red";
+      }
+
+      everyBtn.disabled = true;
+    });
   });
 });
 
-/**
- * Todays task for project
- * 1) showcase correct ans if selected - green ,if wrong - red (done)
- * 2) Disable every button after clicking ,No changing ans (done little tricky but done)
- * 3) Maintaining a score counter at last when quiz gets over
- *
- */
+function updateProgress() {
+  if (questions.length === 0) return;
+
+  // Calculate percentage based on total questions
+  const percentage = ((currentQuestion + 1) / questions.length) * 100;
+
+  // Update the CSS width property
+  progressBar.style.width = `${percentage}%`;
+
+  // Optional: Update text inside or alongside the progress bar if progressText exists
+  if (progressText) {
+    progressText.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
+  }
+}
