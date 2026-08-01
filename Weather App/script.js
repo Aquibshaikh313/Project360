@@ -60,3 +60,5 @@ searchForm.addEventListener("submit", function (e) {
   weatherData(city);
   searchInput.value = "";
 });
+
+
